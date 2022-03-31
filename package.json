@@ -1,6 +1,7 @@
 {
-  "name": "ngx-notifications",
-  "version": "0.0.0",
+  "name": "ngx-notifications-demo",
+  "description": "Simple notification library for Angular",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,7 +9,16 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
-  "private": true,
+  "private": false,
+  "author": "Klaus Brandner <k.brandner@fivedesigns.dev> (https://fivedesigns.dev/)",
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "notification",
+    "notifications",
+    "alert",
+    "toast"
+  ],
   "dependencies": {
     "@angular/animations": "~13.3.0",
     "@angular/common": "~13.3.0",
@@ -34,6 +44,7 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "ng-packagr": "^13.0.0",
     "typescript": "~4.6.2"
   }
 }
