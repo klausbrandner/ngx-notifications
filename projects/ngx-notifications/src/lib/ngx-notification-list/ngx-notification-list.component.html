@@ -1,4 +1,6 @@
-<div class="ngx-notification-list-container">
+<div class="ngx-notification-list-container"
+  [ngClass]="(ngxNotificationService.position$ | async) ?? ''"
+  [class.reverse]="(ngxNotificationService.position$ | async)?.includes('top')">
   <div *ngFor="let notification of ngxNotificationService.notifications$ | async"
     class="ngx-notification-list-item">
     <ngx-notification [notification]="notification" (removeNotification)="onRemoveNotification($event)"></ngx-notification>

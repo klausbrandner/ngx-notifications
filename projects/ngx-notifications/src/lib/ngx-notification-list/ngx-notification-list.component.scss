@@ -1,9 +1,40 @@
 .ngx-notification-list-container {
   position: fixed;
-  bottom: 10px;
-  left: 0;
   z-index: 1100;
   width: 350px;
+  display: flex;
+  flex-direction: column;
+
+  &.reverse {
+    flex-direction: column-reverse;
+  }
+
+  &.top-left {
+    top: 10px;
+    left: 0;
+  }
+  &.top-center {
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+  &.top-right {
+    top: 10px;
+    right: 0;
+  }
+  &.bottom-left {
+    bottom: 10px;
+    left: 0;
+  }
+  &.bottom-center {
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+  &.bottom-right {
+    bottom: 10px;
+    right: 0;
+  }
 
   .ngx-notification-list-item {
     margin: 8px 0;

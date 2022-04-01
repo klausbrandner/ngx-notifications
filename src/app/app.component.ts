@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxNotificationService } from 'ngx-notifications';
+import { NgxNotificationGlobalConfig, NgxNotificationOptions, NgxNotificationService } from 'ngx-notifications';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +12,24 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const options: NgxNotificationGlobalConfig = {
+      position: 'top-right'
+    }
+    this.notificationService.setOptions(options);
   }
 
   showInfo(): void {
-    this.notificationService.info("Information", "This is just an information.");
+    this.notificationService.info("Information", "This is just an information.", {
+      animation: 'slide'
+    });
   }
 
   showSuccess(): void {
-    this.notificationService.success("Success", "Changes successfully saved.");
+    this.notificationService.success("Success", "Changes successfully saved.", {
+      animation: 'fade',
+      timeDisplayed: 2000,
+      color: "#00ff00"
+    });
   }
 
   showWarning(): void {

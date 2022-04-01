@@ -21,30 +21,6 @@
     &.close {
       animation: notification-close-animation 0.4s ease-out;
     }
-
-    &.success {
-      border-left: 4px solid rgb(52,199,89);
-
-      .ngx-notification-icon .ngx-notification-icon-circle {
-        background: rgb(52,199,89);
-      }
-    }
-
-    &.warning {
-      border-left: 4px solid rgb(255,149,0);
-
-      .ngx-notification-icon .ngx-notification-icon-circle {
-        background: rgb(255,149,0);
-      }
-    }
-
-    &.error {
-      border-left: 4px solid rgb(255,59,48);
-
-      .ngx-notification-icon .ngx-notification-icon-circle {
-        background: rgb(255,59,48);
-      }
-    }
   }
 
   .ngx-notification-icon {

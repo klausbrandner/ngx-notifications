@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { NgxNotification } from '../ngx-notification';
 
 @Component({
   selector: 'ngx-notification',
@@ -7,11 +8,10 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 })
 export class NgxNotificationComponent implements OnInit, OnDestroy {
 
-  @Input() notification: any;
+  @Input() notification: NgxNotification | undefined;
   @Output() removeNotification: EventEmitter<string> = new EventEmitter<string>();
 
   private closeTimer: any;
-  private timeDisplayed = 6000;
   closed: boolean = false;
 
   constructor() { }
@@ -19,7 +19,7 @@ export class NgxNotificationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.closeTimer = setTimeout(() => {
       this.closeNotification();
-    }, this.timeDisplayed);
+    }, this.notification?.timeDisplayed ?? 6000);
   }
 
   closeNotification(): void {
@@ -28,8 +28,8 @@ export class NgxNotificationComponent implements OnInit, OnDestroy {
       this.closed = true;
 
       setTimeout(() => {
-        this.removeNotification.emit(this.notification.id);
-      }, 400);
+        if (this.notification) this.removeNotification.emit(this.notification.id);
+      }, 390);
     }
   }
 
