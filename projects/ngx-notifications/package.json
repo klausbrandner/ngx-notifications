@@ -11,6 +11,11 @@
   },
   "author": "Klaus Brandner <k.brandner@fivedesigns.dev> (https://fivedesigns.dev/)",
   "license": "MIT",
+  "homepage": "https://github.com/klausbrandner/ngx-notifications",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/klausbrandner/ngx-notifications"
+  },
   "keywords": [
     "angular",
     "notification",

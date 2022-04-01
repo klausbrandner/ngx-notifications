@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgxNotificationsComponent } from './ngx-notifications.component';
+import { NgxNotificationComponent } from './ngx-notification.component';
 
-describe('NgxNotificationsComponent', () => {
-  let component: NgxNotificationsComponent;
-  let fixture: ComponentFixture<NgxNotificationsComponent>;
+describe('NgxNotificationComponent', () => {
+  let component: NgxNotificationComponent;
+  let fixture: ComponentFixture<NgxNotificationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NgxNotificationsComponent ]
+      declarations: [ NgxNotificationComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NgxNotificationsComponent);
+    fixture = TestBed.createComponent(NgxNotificationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NgxNotificationsService } from './ngx-notifications.service';
+import { NgxNotificationService } from './ngx-notification.service';
 
 describe('NgxNotificationsService', () => {
-  let service: NgxNotificationsService;
+  let service: NgxNotificationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(NgxNotificationsService);
+    service = TestBed.inject(NgxNotificationService);
   });
 
   it('should be created', () => {
