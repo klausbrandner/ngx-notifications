@@ -13,8 +13,8 @@ export interface NgxNotificationGlobalConfig {
 }
 
 export interface NgxNotificationColors {
-  info: string;
-  success: string;
-  warning: string;
-  error: string;
+  info?: string;
+  success?: string;
+  warning?: string;
+  error?: string;
 }

@@ -27,8 +27,7 @@ export class AppComponent implements OnInit {
   showSuccess(): void {
     this.notificationService.success("Success", "Changes successfully saved.", {
       animation: 'fade',
-      timeDisplayed: 2000,
-      color: "#00ff00"
+      timeDisplayed: 2000
     });
   }
 

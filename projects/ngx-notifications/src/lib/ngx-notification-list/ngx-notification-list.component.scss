@@ -1,7 +1,9 @@
+$spaceToEdge: 8px;
+
 .ngx-notification-list-container {
   position: fixed;
   z-index: 1100;
-  width: 350px;
+  width: 380px;
   display: flex;
   flex-direction: column;
 
@@ -10,29 +12,29 @@
   }
 
   &.top-left {
-    top: 10px;
+    top: $spaceToEdge;
     left: 0;
   }
   &.top-center {
-    top: 10px;
+    top: $spaceToEdge;
     left: 50%;
     transform: translate(-50%, 0);
   }
   &.top-right {
-    top: 10px;
+    top: $spaceToEdge;
     right: 0;
   }
   &.bottom-left {
-    bottom: 10px;
+    bottom: $spaceToEdge;
     left: 0;
   }
   &.bottom-center {
-    bottom: 10px;
+    bottom: $spaceToEdge;
     left: 50%;
     transform: translate(-50%, 0);
   }
   &.bottom-right {
-    bottom: 10px;
+    bottom: $spaceToEdge;
     right: 0;
   }
 

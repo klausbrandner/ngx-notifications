@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { NgxNotification } from '../ngx-notification';
 
 @Component({
@@ -9,6 +10,7 @@ import { NgxNotification } from '../ngx-notification';
 export class NgxNotificationComponent implements OnInit, OnDestroy {
 
   @Input() notification: NgxNotification | undefined;
+  @Input() listPosition$: Observable<string> | undefined;
   @Output() removeNotification: EventEmitter<string> = new EventEmitter<string>();
 
   private closeTimer: any;

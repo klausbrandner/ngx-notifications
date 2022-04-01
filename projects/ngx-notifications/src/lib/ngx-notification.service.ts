@@ -96,7 +96,7 @@ export class NgxNotificationService {
       title,
       message,
       timeDisplayed: options?.timeDisplayed ?? this._config.timeDisplayed!,
-      color: options?.color ?? defaultColorForType,
+      color: options?.color ?? defaultColorForType!,
       animation: options?.animation ?? this._config.animation!
     };
     this._notifications.push(notification);
