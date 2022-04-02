@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NgxNotificationOptions } from './ngx-notification-options';
-import { NgxNotificationColors, NgxNotificationGlobalConfig } from './ngx-notification-global-config';
+import { NgxNotificationColors, NgxGlobalNotificationsConfig } from './ngx-global-notifications-config';
 import { NgxNotificationsRefService } from './ngx-notifications-ref.service';
 import { NgxNotification } from './ngx-notification';
 import { NgxNotificationType } from './ngx-notification-type';
@@ -15,7 +15,7 @@ export class NgxNotificationService {
   private _notifications: NgxNotification[] = [];
 
   position$: BehaviorSubject<string> = new BehaviorSubject<string>('bottom-left');
-  private _config: NgxNotificationGlobalConfig = {
+  private _config: NgxGlobalNotificationsConfig = {
     position: 'bottom-left',
     maxNotificationsCount: 5,
     timeDisplayed: 6000,
@@ -48,7 +48,7 @@ export class NgxNotificationService {
     this._addNotification(NgxNotificationType.ERROR, title, message, options);
   }
 
-  setOptions(options: NgxNotificationGlobalConfig): void {
+  setOptions(options: NgxGlobalNotificationsConfig): void {
 
     // Publish new position if changed
     if (options.position && options.position !== this._config.position)

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxNotificationGlobalConfig, NgxNotificationOptions, NgxNotificationService } from 'ngx-notifications';
+import { NgxGlobalNotificationsConfig, NgxNotificationService } from 'ngx-notifications';
 
 type PositionType = 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
 
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   }
 
   showError(): void {
-    this.notificationService.error("Oh Snap!", "Could not save changes.");
+    this.notificationService.error("Error", "Could not save changes.");
   }
 
   bounce(): void {
@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
   }
 
   updatePosition(): void {
-    const options: NgxNotificationGlobalConfig = {
+    const options: NgxGlobalNotificationsConfig = {
       position: this.position
     }
     this.notificationService.setOptions(options);
