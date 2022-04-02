@@ -1,27 +1,149 @@
 # NgxNotifications
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.1.
+NgxNotifications is a simple notification library for Angular.
 
-## Development server
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+You can install the package via npm.
 
-## Code scaffolding
+```shell
+npm install --save
+```
+## Usage
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 1. Import the npm module
 
-## Build
+Import `NgxNotificationsModule` to your application module to make the `NgxNotificationService` available in your application.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```typescript
+...
+import { NgxNotificationsModule } from 'ngx-notifications';
+...
 
-## Running unit tests
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    ...
+    NgxNotificationsModule,
+    ...
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 2. Use the `NgxNotificationService` in your application
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { NgxNotificationService } from 'ngx-notifications';
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent implements OnInit {
+
+  constructor(private notificationService: NgxNotificationService) {
+  }
+
+  ngOnInit(): void {
+    // Display a notification of type info
+    this.notificationService.info('My Notification','This is a demo notification.');
+  }
+}
+```
+
+You can show four different types of notifications, namely `info`, `success`, `warning`, and `error`. The `NgxNotificationService` provides a method for each type and requires a `title` and `message` argument and optional `options`.
+
+
+```typescript
+// Info
+this.notificationService.info(title, message, options);
+
+// Success
+this.notificationService.success(title, message, options);
+
+// Warning
+this.notificationService.warning(title, message, options);
+
+// Error
+this.notificationService.error(title, message, options);
+```
+
+## Notification Options
+The optional `options` argument is an object of type `NgxNotificationOptions` with properties to configure the `color` of the notification, the type of `animation` and the time the notification should be displayed on the screen using `timeDisplayed`.
+
+```typescript
+const options: NgxNotificationOptions = {
+  color: '#ff0000', // color code as string
+  animation: 'fade', // either 'bounce', 'fade', or 'slide'
+  timeDisplayed: 3000 // in milliseconds
+};
+
+this.notificationService.info('Information', 'Hello World!', options);
+```
+
+The `color` property expects a color code as string. The `animation` property can be either of `'bounce'`, `'fade'`, or `'slide'`. Finally, the `timeDisplayed` property can be provided in milliseconds.
+
+## Global Configuration
+
+To avoid having to define notification options every time you want to display a notification, you can set global notification options. Just call the `setOptions` method on your `NgxNotificationService` instance and pass an object of type `NgxGlobalNotificationsConfig` as an argument.
+
+```typescript
+this.notificationService.setOptions(options);
+```
+
+### Example
+```typescript
+const globalOptions: NgxGlobalNotificationsConfig = {
+  position: 'top-center',
+  maxNotificationsCount: 3,
+  timeDisplayed: 4000,
+  colors: {
+    info: '#6495ED',
+    success: 'rgb(46, 204, 113)',
+    warning: '#FFC300',
+    error: 'red'
+  },
+  animation: 'slide'
+}
+
+this.notificationService.setOptions(globalOptions);
+```
+### Position
+
+With the `position` option you can choose where notifications should be displayed on the screen. The `position` property can be either of `'top-left'`, `'top-center'`, `'top-right'`, `'bottom-left'`, `'bottom-center'`, or `'bottom-right'`.
+
+### Max Notifications Count
+
+`maxNotificationsCount` defines the maximum number of notifications that can be displayed on the screen at the same time.
+
+### Time Displayed
+
+`timeDisplayed` defines the time notifications are displayed on the screen in milliseconds.
+
+### Colors
+
+Using the `colors` option, you can define your custom color codes for all notification types to match with your theme. `colors` requires an object with a property for each notification type:
+
+```typescript
+const colors = {
+  info: '#6495ED',
+  success: 'rgb(46, 204, 113)',
+  warning: '#FFC300',
+  error: 'red'
+}
+```
+
+### Animation
+
+Using the `animation` option, you can set the default animation for your notifications. It can be either of `'bounce'`, `'fade'`, or `'slide'`
+
+
