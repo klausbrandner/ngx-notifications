@@ -1,12 +1,9 @@
 <div class="ngx-notification-container">
   <div class="ngx-notification-card"
-    [class.success]="notification?.type === 'SUCCESS'"
-    [class.warning]="notification?.type === 'WARNING'"
-    [class.error]="notification?.type === 'ERROR'"
     [style.border-left]="'5px solid ' + notification?.color"
     [class.show]="!closed"
     [class.close]="closed"
-    [ngClass]="[notification?.animation ?? '', listPosition$ | async]">
+    [ngClass]="[notification?.animation ?? '', (listPosition$ | async) ?? '']">
     <div class="ngx-notification-icon">
       <div class="ngx-notification-icon-circle" [style.background]="notification?.color">
         <svg *ngIf="notification?.type === 'INFO'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -25,7 +22,7 @@
     </div>
     <div class="ngx-notification-content">
       <div class="ngx-notification-title">{{ notification?.title }}</div>
-      <div>{{ notification?.message }}</div>
+      <div class="ngx-notification-message">{{ notification?.message }}</div>
     </div>
     <div class="ngx-notification-close">
       <div class="ngx-notification-close-circle" (click)="closeNotification()">

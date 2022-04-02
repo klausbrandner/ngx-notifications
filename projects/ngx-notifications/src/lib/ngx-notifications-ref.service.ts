@@ -6,7 +6,7 @@ import { NgxNotificationListComponent } from './ngx-notification-list/ngx-notifi
 })
 export class NgxNotificationsRefService {
 
-  private componentRef: ComponentRef<NgxNotificationListComponent> | undefined;
+  componentRef: ComponentRef<NgxNotificationListComponent> | undefined;
   
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -20,9 +20,8 @@ export class NgxNotificationsRefService {
   }
 
   private _addNotificationListToBody(): void {
-    console.log("### ADDING NOTIFICATION LIST TO BODY ###");
 
-    // 1. Create a component reference from the component 
+    // 1. Create a component reference from the component
     this.componentRef = this.componentFactoryResolver
       .resolveComponentFactory(NgxNotificationListComponent)
       .create(this.injector);
@@ -32,7 +31,7 @@ export class NgxNotificationsRefService {
 
     // 3. Get DOM element from component
     const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>)
-    .rootNodes[0] as HTMLElement;
+      .rootNodes[0] as HTMLElement;
 
     // 4. Append DOM element to the body
     document.body.appendChild(domElem);
