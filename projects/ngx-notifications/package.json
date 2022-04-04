@@ -1,10 +1,10 @@
 {
-  "name": "ngx-notifications",
+  "name": "@fivedesigns/ngx-notifications",
   "description": "Simple notification library for Angular",
   "version": "0.1.0",
   "peerDependencies": {
-    "@angular/common": "^13.3.0",
-    "@angular/core": "^13.3.0"
+    "@angular/common": ">=12.0.0",
+    "@angular/core": ">=12.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

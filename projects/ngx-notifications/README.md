@@ -7,7 +7,7 @@ NgxNotifications is a simple notification library for Angular.
 You can install the package via npm.
 
 ```shell
-npm install --save
+npm install --save @fivedesigns/ngx-notifications
 ```
 ## Usage
 
@@ -17,7 +17,7 @@ Import `NgxNotificationsModule` to your application module to make the `NgxNotif
 
 ```typescript
 ...
-import { NgxNotificationsModule } from 'ngx-notifications';
+import { NgxNotificationsModule } from '@fivedesigns/ngx-notifications';
 ...
 
 @NgModule({
@@ -41,7 +41,7 @@ export class AppModule { }
 
 ```typescript
 import { Component, OnInit } from '@angular/core';
-import { NgxNotificationService } from 'ngx-notifications';
+import { NgxNotificationService } from '@fivedesigns/ngx-notifications';
 
 @Component({
   selector: 'app-root',
@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Display a notification of type info
+    // Display a notification
     this.notificationService.info('My Notification','This is a demo notification.');
   }
 }
@@ -146,4 +146,6 @@ const colors = {
 
 Using the `animation` option, you can set the default animation for your notifications. It can be either of `'bounce'`, `'fade'`, or `'slide'`
 
+## Donation
 
+You can <a href="https://buymeacoffee.com/s9QBui6alO">buy me a coffee</a> if you enjoy ngx-nofitications.
