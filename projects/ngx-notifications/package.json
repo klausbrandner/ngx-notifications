@@ -15,7 +15,7 @@
   "homepage": "https://github.com/klausbrandner/ngx-notifications",
   "repository": {
     "type": "git",
-    "url": "https://github.com/klausbrandner/ngx-notifications"
+    "url": "git+https://github.com/klausbrandner/ngx-notifications.git"
   },
   "bugs": {
     "url": "https://github.com/klausbrandner/ngx-notifications/issues"
