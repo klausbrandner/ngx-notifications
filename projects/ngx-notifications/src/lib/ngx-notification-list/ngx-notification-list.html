@@ -1,0 +1,11 @@
+<div class="ngx-notification-list-container"
+  [ngClass]="notificationService.position()"
+  [class.reverse]="notificationService.position().includes('top')">
+
+  @for (notification of notificationService.notifications(); track notification) {
+    <div class="ngx-notification-list-item">
+      <ngx-notification [notification]="notification"
+        [position]="notificationService.position()!"></ngx-notification>
+    </div>
+  }
+</div>

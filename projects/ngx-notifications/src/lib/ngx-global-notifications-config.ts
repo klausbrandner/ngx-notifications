@@ -1,15 +1,9 @@
-export interface NgxGlobalNotificationsConfig {
-
-  position?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
-
-  maxNotificationsCount?: number;
-  
-  timeDisplayed?: number;
-
-  colors?: NgxNotificationColors;
-
-  animation?: 'bounce' | 'slide' | 'fade';
-  
+export interface NgxGlobalNotificationOptions {
+  position: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
+  maxNotificationsCount: number;
+  timeDisplayed: number;
+  colors: NgxNotificationColors;
+  animation: 'bounce' | 'slide' | 'fade';
 }
 
 export interface NgxNotificationColors {

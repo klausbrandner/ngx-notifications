@@ -1,46 +1,27 @@
-# NgxNotifications
+# Ngx Notifications
 
-NgxNotifications is a simple notification library for Angular.
+Simple, lightweight toast notifications for Angular.
+
+## Features
+
+- `info`, `success`, `warning`, and `error` notification methods
+- Per-notification overrides (`color`, `animation`, `timeDisplayed`)
+- Global defaults via `setOptions(...)`
+- Queue limit with `maxNotificationsCount`
+- Flexible positions (`top-*` and `bottom-*`)
 
 ## Installation
 
-You can install the package via npm.
-
-```shell
-npm install --save @fivedesigns/ngx-notifications
-```
-## Usage
-
-### 1. Import the npm module
-
-Import `NgxNotificationsModule` to your application module to make the `NgxNotificationService` available in your application.
-
-```typescript
-...
-import { NgxNotificationsModule } from '@fivedesigns/ngx-notifications';
-...
-
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    ...
-    NgxNotificationsModule,
-    ...
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
+```bash
+npm install @fivedesigns/ngx-notifications
 ```
 
-### 2. Use the `NgxNotificationService` in your application
+## Quick Start
 
+Inject `NgxNotificationService` anywhere (component, service) and call a method.
 
-
-```typescript
-import { Component, OnInit } from '@angular/core';
+```ts
+import { Component, inject } from '@angular/core';
 import { NgxNotificationService } from '@fivedesigns/ngx-notifications';
 
 @Component({
@@ -48,104 +29,99 @@ import { NgxNotificationService } from '@fivedesigns/ngx-notifications';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
+  private readonly notificationService = inject(NgxNotificationService);
 
-  constructor(private notificationService: NgxNotificationService) {
-  }
-
-  ngOnInit(): void {
-    // Display a notification
-    this.notificationService.info('My Notification','This is a demo notification.');
+  save(): void {
+    this.notificationService.success('Saved', 'Your changes were saved successfully.');
   }
 }
 ```
 
-You can show four different types of notifications, namely `info`, `success`, `warning`, and `error`. The `NgxNotificationService` provides a method for each type and requires a `title` and `message` argument and optional `options`.
+The notification container is mounted automatically when the first notification is shown.
 
+## Service API
 
-```typescript
-// Info
+Each method accepts:
+
+- `title: string`
+- `message: string`
+- `options?: NgxNotificationOptions`
+
+```ts
 this.notificationService.info(title, message, options);
-
-// Success
 this.notificationService.success(title, message, options);
-
-// Warning
 this.notificationService.warning(title, message, options);
-
-// Error
 this.notificationService.error(title, message, options);
 ```
 
-## Notification Options
-The optional `options` argument is an object of type `NgxNotificationOptions` with properties to configure the `color` of the notification, the type of `animation` and the time the notification should be displayed on the screen using `timeDisplayed`.
+## Per-Notification Options
 
-```typescript
+```ts
+import { NgxNotificationOptions } from '@fivedesigns/ngx-notifications';
+
 const options: NgxNotificationOptions = {
-  color: '#ff0000', // color code as string
-  animation: 'fade', // either 'bounce', 'fade', or 'slide'
-  timeDisplayed: 3000 // in milliseconds
+  color: '#4f46e5',
+  animation: 'fade', // 'bounce' | 'slide' | 'fade'
+  timeDisplayed: 3000
 };
 
-this.notificationService.info('Information', 'Hello World!', options);
+this.notificationService.info('Heads up', 'Custom-styled notification', options);
 ```
-
-The `color` property expects a color code as string. The `animation` property can be either of `'bounce'`, `'fade'`, or `'slide'`. Finally, the `timeDisplayed` property can be provided in milliseconds.
 
 ## Global Configuration
 
-To avoid having to define notification options every time you want to display a notification, you can set global notification options. Just call the `setOptions` method on your `NgxNotificationService` instance and pass an object of type `NgxGlobalNotificationsConfig` as an argument.
+Set defaults once with `setOptions(...)`. You can provide only the fields you want to override.
 
-```typescript
-this.notificationService.setOptions(options);
-```
+```ts
+import { NgxGlobalNotificationsConfig } from '@fivedesigns/ngx-notifications';
 
-### Example
-```typescript
 const globalOptions: NgxGlobalNotificationsConfig = {
   position: 'top-center',
   maxNotificationsCount: 3,
   timeDisplayed: 4000,
+  animation: 'slide', // 'bounce' | 'slide' | 'fade'
   colors: {
     info: '#6495ED',
-    success: 'rgb(46, 204, 113)',
-    warning: '#FFC300',
-    error: 'red'
-  },
-  animation: 'slide'
-}
+    success: '#22c55e',
+    warning: '#f59e0b',
+    error: '#ef4444'
+  }
+};
 
 this.notificationService.setOptions(globalOptions);
 ```
-### Position
 
-With the `position` option you can choose where notifications should be displayed on the screen. The `position` property can be either of `'top-left'`, `'top-center'`, `'top-right'`, `'bottom-left'`, `'bottom-center'`, or `'bottom-right'`.
+**Position**
 
-### Max Notifications Count
+Use `position` to choose where notifications appear on the screen.
 
-`maxNotificationsCount` defines the maximum number of notifications that can be displayed on the screen at the same time.
-
-### Time Displayed
-
-`timeDisplayed` defines the time notifications are displayed on the screen in milliseconds.
-
-### Colors
-
-Using the `colors` option, you can define your custom color codes for all notification types to match with your theme. `colors` requires an object with a property for each notification type:
+Possible values are:
+- `'top-left'`
+- `'top-center'`
+- `'top-right'`
+- `'bottom-left'`
+- `'bottom-center'`
+- `'bottom-right'`
 
 ```typescript
-const colors = {
-  info: '#6495ED',
-  success: 'rgb(46, 204, 113)',
-  warning: '#FFC300',
-  error: 'red'
-}
+this.notificationService.setOptions({
+  position: 'top-right'
+});
 ```
 
-### Animation
+**Default Values**
 
-Using the `animation` option, you can set the default animation for your notifications. It can be either of `'bounce'`, `'fade'`, or `'slide'`
+- `position`: `bottom-left`
+- `maxNotificationsCount`: `5`
+- `timeDisplayed`: `6000`
+- `animation`: `bounce`
+- `colors`:
+  - `info`: `rgb(50,173,230)`
+  - `success`: `rgb(52,199,89)`
+  - `warning`: `rgb(255,149,0)`
+  - `error`: `rgb(255,59,48)`
 
 ## Donation
 
-You can <a href="https://buymeacoffee.com/s9QBui6alO">buy me a coffee</a> if you enjoy ngx-nofitications.
+If you enjoy this package, you can [buy me a coffee](https://buymeacoffee.com/s9QBui6alO).

@@ -1,0 +1,203 @@
+<section class="hero demo-hero is-fullheight-with-navbar">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-variable is-6">
+        <div class="column is-6-desktop">
+          <span class="tag is-link is-light mb-4">ngx-notifications demo</span>
+          <h1 class="title is-1 mb-4">Clean, configurable notifications for Angular</h1>
+          <p class="subtitle is-5 mb-5">
+            This page demonstrates notification types, animations, global defaults, per-notification overrides,
+            queue limits, and position controls.
+          </p>
+
+          <div class="card surface-card mb-5">
+            <header class="card-header">
+              <p class="card-header-title">Quick Type Preview</p>
+            </header>
+            <div class="card-content">
+              <div class="buttons">
+                <button class="button is-info" type="button" (click)="showInfo()">Info</button>
+                <button class="button is-success" type="button" (click)="showSuccess()">Success</button>
+                <button class="button is-warning" type="button" (click)="showWarning()">Warning</button>
+                <button class="button is-danger" type="button" (click)="showError()">Error</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card surface-card">
+            <header class="card-header">
+              <p class="card-header-title">Animation Preview</p>
+            </header>
+            <div class="card-content">
+              <div class="buttons">
+                @for (animation of animations; track animation) {
+                  <button class="button is-light" type="button" (click)="previewAnimation(animation)">
+                    {{ animation }}
+                  </button>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-6-desktop">
+          <div class="card surface-card mb-5">
+            <header class="card-header">
+              <p class="card-header-title">Global Configuration</p>
+            </header>
+            <div class="card-content">
+              <div class="field">
+                <label class="label">Position</label>
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select [(ngModel)]="globalConfig.position" aria-label="Select notification position">
+                      @for (position of positions; track position) {
+                        <option [value]="position">{{ position }}</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="columns is-mobile">
+                <div class="column">
+                  <div class="field">
+                    <label class="label">Max Queue</label>
+                    <div class="control">
+                      <input
+                        class="input"
+                        type="number"
+                        min="1"
+                        max="10"
+                        [(ngModel)]="globalConfig.maxNotificationsCount"
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="column">
+                  <div class="field">
+                    <label class="label">Default Time (ms)</label>
+                    <div class="control">
+                      <input
+                        class="input"
+                        type="number"
+                        min="500"
+                        step="100"
+                        [(ngModel)]="globalConfig.timeDisplayed"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Default Animation</label>
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select [(ngModel)]="globalConfig.animation" aria-label="Select default animation">
+                      @for (animation of animations; track animation) {
+                        <option [value]="animation">{{ animation }}</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <label class="label">Default Colors</label>
+              <div class="columns is-mobile color-grid">
+                @for (type of notificationTypes; track type) {
+                  <div class="column">
+                    <div class="field">
+                      <label class="label is-small">{{ type }}</label>
+                      <div class="control">
+                        <input class="input color-input" type="color" [(ngModel)]="globalConfig.colors[type]">
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+
+              <div class="buttons mt-4">
+                <button class="button is-link" type="button" (click)="applyGlobalOptions()">Apply Global Options</button>
+                <button class="button is-light" type="button" (click)="resetGlobalOptions()">Reset Defaults</button>
+                <button class="button is-light" type="button" (click)="runQueueDemo()">Queue Limit Demo</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card surface-card">
+            <header class="card-header">
+              <p class="card-header-title">Per-Notification Override</p>
+            </header>
+            <div class="card-content">
+              <div class="field">
+                <label class="label">Type</label>
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select [(ngModel)]="customNotification.type" aria-label="Select notification type">
+                      @for (type of notificationTypes; track type) {
+                        <option [value]="type">{{ type }}</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Title</label>
+                <div class="control">
+                  <input class="input" type="text" [(ngModel)]="customNotification.title">
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Message</label>
+                <div class="control">
+                  <textarea class="textarea" rows="3" [(ngModel)]="customNotification.message"></textarea>
+                </div>
+              </div>
+
+              <div class="columns is-mobile">
+                <div class="column">
+                  <div class="field">
+                    <label class="label">Color</label>
+                    <div class="control">
+                      <input class="input color-input" type="color" [(ngModel)]="customNotification.color">
+                    </div>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="field">
+                    <label class="label">Animation</label>
+                    <div class="control">
+                      <div class="select is-fullwidth">
+                        <select [(ngModel)]="customNotification.animation" aria-label="Select custom animation">
+                          @for (animation of animations; track animation) {
+                            <option [value]="animation">{{ animation }}</option>
+                          }
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="column">
+                  <div class="field">
+                    <label class="label">Time (ms)</label>
+                    <div class="control">
+                      <input class="input" type="number" min="500" step="100" [(ngModel)]="customNotification.timeDisplayed">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="button is-primary is-fullwidth" type="button" (click)="showCustomNotification()">
+                Show Custom Notification
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

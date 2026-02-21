@@ -1,21 +1,22 @@
-import { CommonModule } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
-import { NgxNotificationListComponent } from './ngx-notification-list/ngx-notification-list.component';
-import { NgxNotificationType } from './ngx-notification-type';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { NgxNotificationColors } from './ngx-global-notifications-config';
+import { NgxNotificationListHostService } from './ngx-notification-list-host.service';
+import { NgxNotificationOptions } from './ngx-notification-options';
 import { NgxNotificationService } from './ngx-notification.service';
-import { NgxNotificationComponent } from './ngx-notification/ngx-notification.component';
+import { NgxNotificationType } from './ngx-notification';
 
-describe('NgxNotificationsService', () => {
+describe('NgxNotificationService', () => {
   let service: NgxNotificationService;
+  let hostServiceSpy: { ensureNotificationListMounted: () => void };
 
   beforeEach(() => {
+    hostServiceSpy = { ensureNotificationListMounted: vi.fn() };
     TestBed.configureTestingModule({
-      declarations: [
-        NgxNotificationListComponent,
-        NgxNotificationComponent
+      providers: [
+        { provide: NgxNotificationListHostService, useValue: hostServiceSpy },
       ],
-      imports: [CommonModule]
     });
     service = TestBed.inject(NgxNotificationService);
   });
@@ -24,118 +25,71 @@ describe('NgxNotificationsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should start with an empty list of notifications', (done: DoneFn) => {
-    service.notifications$.subscribe(notifications => {
-      expect(notifications.length).toBe(0);
-      done();
-    });
+  it('adds an info notification with defaults', () => {
+    service.info('Title', 'Message');
+
+    expect(hostServiceSpy.ensureNotificationListMounted).toHaveBeenCalledTimes(1);
+    const notifications = service.notifications();
+    expect(notifications.length).toBe(1);
+    expect(notifications[0].type).toBe(NgxNotificationType.INFO);
+    expect(notifications[0].title).toBe('Title');
+    expect(notifications[0].message).toBe('Message');
+    expect(notifications[0].timeDisplayed).toBe(6000);
+    expect(notifications[0].color).toBe('rgb(50,173,230)');
+    expect(notifications[0].animation).toBe('bounce');
+    expect(notifications[0].id.length).toBe(10);
   });
 
-  it('should add a notification of type information', (done: DoneFn) => {
-    service.info('My Notification', 'Hello World!');
-    service.notifications$.subscribe(notifications => {
-      expect(notifications[0].type).toBe(NgxNotificationType.INFO);
-      done();
-    });
+  it('supports per-notification overrides', () => {
+    const options: NgxNotificationOptions = {
+      timeDisplayed: 1500,
+      color: 'hotpink',
+      animation: 'fade',
+    };
+
+    service.success('Done', 'All good', options);
+
+    const notifications = service.notifications();
+    expect(notifications.length).toBe(1);
+    expect(notifications[0].type).toBe(NgxNotificationType.SUCCESS);
+    expect(notifications[0].timeDisplayed).toBe(1500);
+    expect(notifications[0].color).toBe('hotpink');
+    expect(notifications[0].animation).toBe('fade');
   });
 
-  it('should add a notification of type success', (done: DoneFn) => {
-    service.success('My Notification', 'Hello World!');
-    service.notifications$.subscribe(notifications => {
-      expect(notifications[0].type).toBe(NgxNotificationType.SUCCESS);
-      done();
-    });
+  it('removes notifications by id', () => {
+    service.warning('Warn', 'Take care');
+    const [first] = service.notifications();
+
+    service.removeNotification(first.id);
+
+    expect(service.notifications().length).toBe(0);
   });
 
-  it('should add a notification of type warning', (done: DoneFn) => {
-    service.warning('My Notification', 'Hello World!');
-    service.notifications$.subscribe(notifications => {
-      expect(notifications[0].type).toBe(NgxNotificationType.WARNING);
-      done();
-    });
+  it('enforces max notifications count by removing oldest', () => {
+    service.setOptions({ maxNotificationsCount: 2 });
+
+    service.info('T1', 'M1');
+    service.info('T2', 'M2');
+    const firstId = service.notifications()[0].id;
+
+    service.info('T3', 'M3');
+
+    const notifications = service.notifications();
+    expect(notifications.length).toBe(2);
+    expect(notifications.some(n => n.id === firstId)).toBe(false);
   });
 
-  it('should add a notification of type error', (done: DoneFn) => {
-    service.error('My Notification', 'Hello World!');
-    service.notifications$.subscribe(notifications => {
-      expect(notifications[0].type).toBe(NgxNotificationType.ERROR);
-      done();
-    });
-  });
+  it('merges partial color overrides and updates position', () => {
+    const colors: NgxNotificationColors = { info: 'blue' };
+    service.setOptions({ position: 'top-right', colors });
 
-  it('should do nothing if trying to delete a notification that does not exist', (done: DoneFn) => {
-    service.removeNotification("abc");
-    service.notifications$.subscribe(notifications => {
-      expect(notifications.length).toBe(0);
-      done();
-    });
-  });
+    service.info('Info', 'Message');
+    service.success('Success', 'Message');
 
-  it('should publish a new position if position option is updated', (done: DoneFn) => {
-    service.setOptions({
-      position: 'top-center'
-    });
-    service.position$.subscribe(position => {
-      expect(position).toBe('top-center');
-      done();
-    });
+    const notifications = service.notifications();
+    expect(service.position()).toBe('top-right');
+    expect(notifications[0].color).toBe('blue');
+    expect(notifications[1].color).toBe('rgb(52,199,89)');
   });
-
-  it('should update maxNotificationsCount', (done: DoneFn) => {
-    service.setOptions({
-      maxNotificationsCount: 2
-    });
-    service.info('My Notification', 'Hello World!');
-    service.info('My Notification', 'Hello World!');
-    service.info('My Notification', 'Hello World!');
-    service.notifications$.subscribe(notifications => {
-      expect(notifications.length).toBe(2);
-      done();
-    });
-  });
-
-  it('should set default timeDisplayed', (done: DoneFn) => {
-    service.setOptions({
-      timeDisplayed: 2000
-    });
-    service.info('My Notification', 'Hello World!');
-    service.notifications$.subscribe(notifications => {
-      expect(notifications[0].timeDisplayed).toBe(2000);
-      done();
-    });
-  });
-
-  it('should set default colors', (done: DoneFn) => {
-    service.setOptions({
-      colors: {
-        info: "blue",
-        success: "green",
-        warning: "orange",
-        error: "red"
-      }
-    });
-    service.info('My Notification', 'Hello World!');
-    service.success('My Notification', 'Hello World!');
-    service.warning('My Notification', 'Hello World!');
-    service.error('My Notification', 'Hello World!');
-    service.notifications$.subscribe(notifications => {
-      expect(notifications[0].color).toBe("blue");
-      expect(notifications[1].color).toBe("green");
-      expect(notifications[2].color).toBe("orange");
-      expect(notifications[3].color).toBe("red");
-      done();
-    });
-  });
-
-  it('should set default animation', (done: DoneFn) => {
-    service.setOptions({
-      animation: 'fade'
-    });
-    service.info('My Notification', 'Hello World!');
-    service.notifications$.subscribe(notifications => {
-      expect(notifications[0].animation).toBe('fade');
-      done();
-    });
-  });
-
 });

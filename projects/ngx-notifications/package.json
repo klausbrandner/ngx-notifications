@@ -1,14 +1,15 @@
 {
   "name": "@fivedesigns/ngx-notifications",
   "description": "Simple notification library for Angular",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "peerDependencies": {
-    "@angular/common": ">=12.0.0",
-    "@angular/core": ">=12.0.0"
+    "@angular/common": ">=17.1.0",
+    "@angular/core": ">=17.1.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
   },
+  "sideEffects": false,
   "author": "Klaus Brandner <k.brandner@fivedesigns.dev> (https://fivedesigns.dev/)",
   "license": "MIT",
   "homepage": "https://github.com/klausbrandner/ngx-notifications",

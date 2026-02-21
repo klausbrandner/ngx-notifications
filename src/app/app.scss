@@ -1,0 +1,62 @@
+:host {
+  --demo-bg-start: #f8fbff;
+  --demo-bg-end: #eef3ff;
+  --demo-surface: rgba(255, 255, 255, 0.92);
+  --demo-border: rgba(13, 21, 38, 0.08);
+
+  display: block;
+  min-height: 100vh;
+  background: radial-gradient(circle at 10% -10%, #d8f3ff 0%, transparent 40%),
+    linear-gradient(160deg, var(--demo-bg-start), var(--demo-bg-end));
+}
+
+.demo-hero {
+  align-items: stretch;
+}
+
+.surface-card {
+  background: var(--demo-surface);
+  border: 1px solid var(--demo-border);
+  border-radius: 14px;
+  box-shadow: 0 14px 30px rgba(25, 45, 80, 0.08);
+}
+
+.card-header {
+  border-bottom: 1px solid var(--demo-border);
+}
+
+.card-header-title {
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.color-grid {
+  margin-top: 0.5rem;
+}
+
+.color-input {
+  min-height: 2.5rem;
+  padding: 0.2rem;
+}
+
+.button.is-link,
+.button.is-primary {
+  border-radius: 10px;
+}
+
+@media (max-width: 1023px) {
+  .hero-body {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .title.is-1 {
+    font-size: 2rem;
+  }
+}
